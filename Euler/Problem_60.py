@@ -67,7 +67,14 @@ for first_pass in answer_array:
     if len(answer_list_2) > 1:
         answer_array_2.append(answer_list_2)
 
-# pprint(answer_array_2)
+pprint(answer_array_2)
+# THIS IS NEW
+
+
+
+
+
+
 
 # answer_array_3 = []
 # for first_pass in answer_array_2:
