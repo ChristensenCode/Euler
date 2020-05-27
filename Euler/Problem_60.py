@@ -49,6 +49,7 @@ for pass_one in total_primes_string:
     dict[(pass_one)] = values
 # pprint(dict)
 
+# This area is looking for the second option that works with the before and after adder.
 second_dict = {}
 for key, value in dict.items():
     print('key', key)
