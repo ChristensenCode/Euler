@@ -37,9 +37,19 @@ primes_check = primesfrom2to(10000000)
 primes_check_string = set(np.char.mod('%d', primes_check))
 
 test_list = [3, 7, 109, 673]
-# df = pd.read_csv('../data/primes1.txt', header=None, delim_whitespace=True)
-# print(df)
-# print(len(df.columns))
-# for i in range(len(df)):
-#     for j in range(len(df.columns)):
-#         pass
+dict = {}
+for pass_one in total_primes_string:
+    values = []
+
+    for pass_two in total_primes_string:
+        after_value = pass_one + pass_two
+        before_value = pass_two + pass_one
+        if before_value in primes_check_string and after_value in primes_check_string:
+            values.append(pass_two)
+    dict[(pass_one)] = values
+# pprint(dict)
+
+second_dict = {}
+for key, value in dict.items():
+    print('key', key)
+    print('value', value)
