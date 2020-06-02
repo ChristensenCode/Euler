@@ -68,7 +68,7 @@ figurate_db['hepta'] = hepta(figurate_range)
 figurate_db['octo'] = octo(figurate_range)
 df = figurate_db.astype('int64')
 df = df.astype('str')
-possible_solutions = np.arange(1000, 10000)
+possible_solutions = np.arange(1000, 1100)
 possible_solutions = possible_solutions.astype('str')
 
 new_endings = np.arange(11, 100).astype('str')
@@ -77,17 +77,20 @@ new_endings = np.arange(11, 100).astype('str')
 # for i in test.columns:
 #     print(i, test[i].sum())
 
-for i in possible_solutions:
-    solution = []
-    if i[-2] == '0':
+for first_term in possible_solutions:
+    if first_term[-2] == '0':
         continue
-    if i in df.values:
-        solution.append(i)
-        for ending in new_endings:
-            term_two = i[-2:] + ending
-            if term_two in df.values:
-                solution.append(term_two)
-                print(solution)
+    ending = first_term[-2:]
+    solution = [first_term]
+    for new_ending in new_endings:
+        second_term = ending + new_ending
+        if second_term in df.values:
+            solution.append(second_term)
+            for new_ending in new_endings:
+                third_term = second_term[-2:] + new_ending
+                if third_term in df.values:
+                    solution.append(third_term)
+                    print(solution)
 
 
 
