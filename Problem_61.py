@@ -32,7 +32,7 @@ What do we know?
 """
 
 start_time = time()
-
+# testing git
 
 def tri(values):
     return values * (values + 1)/2
