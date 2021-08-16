@@ -1,5 +1,6 @@
 import numpy as np
 from time import time
+from numba import njit
 from pprint import pprint
 import pandas as pd
 
@@ -91,13 +92,6 @@ for first_term in possible_solutions:
                 if third_term in df.values:
                     solution.append(third_term)
                     print(solution)
-
-
-
-
-
-
-
 
 elapsed_time = time() - start_time
 print('The answer was found in {0:.4f} s.'.format(elapsed_time))
