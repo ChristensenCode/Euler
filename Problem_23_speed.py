@@ -37,16 +37,20 @@ non_sum = []
 breaker = 1
 for abundant_value in abundant_values:
     comparison = abundant_values_array + one_abundant_values_array * abundant_value
-    divisor = comparison/abundant_value
-    df = pd.DataFrame({'abundant': abundant_values_array,
-                       'abundant_value': one_abundant_values_array * abundant_value,
-                       'comparison': comparison,
-                       'divisor': divisor})
-    print(df.to_string())
-    if breaker > 1:
-        break
-    breaker += 1
+    divisor = comparison / abundant_value
+    df = pd.DataFrame(
+        {
+            "abundant": abundant_values_array,
+            "abundant_value": one_abundant_values_array * abundant_value,
+            "comparison": comparison,
+            "divisor": divisor,
+        }
+    )
+    # if breaker > 1:
+    # break
+    # breaker += 1
 
+print(df)
 print((non_sum))
 elapsed_time = time() - start_time
-print(f'Total Time {elapsed_time}')
+print(f"Total Time {elapsed_time}")

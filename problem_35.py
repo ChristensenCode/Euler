@@ -9,34 +9,34 @@ from pprint import pprint
 start_time = time()
 
 
-def prime_hunter(length):
-    primes = []
-    for x in range(2, length + 1):
-        isPrime = True
-        for y in range(2, int(x ** 0.5) + 1):
-            if x % y == 0:
-                isPrime = False
-                break
-        if isPrime:
-            primes.append(x)
-    return primes
+def primesfrom2to(n):
+    """ Input n>=6, Returns a array of primes, 2 <= p < n """
+    sieve = np.ones(n // 3 + (n % 6 == 2), dtype=bool)
+    for i in range(1, int(n ** 0.5) // 3 + 1):
+        if sieve[i]:
+            k = 3 * i + 1 | 1
+            sieve[k * k // 3 :: 2 * k] = False
+            sieve[k * (k - 2 * (i & 1) + 4) // 3 :: 2 * k] = False
+    return np.r_[2, 3, ((3 * np.nonzero(sieve)[0][1:] + 1) | 1)]
+
+
 counter = 0
-possible_primes = prime_hunter(1000000)
+possible_primes = primesfrom2to(1000000)
 rotation_primes = []
 prime_set = set(possible_primes)
 
 for value in possible_primes:
     value = str(value)
     value_length = len(value)
-    rotated_value = value[value_length - 1:] + value[:value_length - 1]
-    possible_solution = []
+    rotated_value = value[value_length - 1 :] + value[: value_length - 1]
+    possible_solution = set()
     for N in rotated_value:
-        rotated_value = rotated_value[value_length - 1:] + rotated_value[:value_length - 1]
-        possible_solution.append(int(rotated_value))
-    possible_set = set(possible_solution)
-    if possible_set.issubset(prime_set):
-        rotation_primes.append(value)
+        rotated_value = (
+            rotated_value[value_length - 1 :] + rotated_value[: value_length - 1]
+        )
+        possible_solution.add(int(rotated_value))
+    if possible_solution.issubset(prime_set):
         counter += 1
-elapsed_time =time() - start_time
+elapsed_time = time() - start_time
 print("Compute Time: " + str(elapsed_time) + " seconds")
 print("Answer: " + str(counter))

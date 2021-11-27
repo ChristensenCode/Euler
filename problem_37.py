@@ -10,18 +10,19 @@ from pprint import pprint
 
 start_time = time()
 
-def prime_hunter(length):
-    primes = []
-    for x in range(2, length + 1):
-        isPrime = True
-        for y in range(2, int(x ** 0.5) + 1):
-            if x % y == 0:
-                isPrime = False
-                break
-        if isPrime:
-            primes.append(x)
-    return primes
-possible_primes = prime_hunter(1000000)
+
+def primesfrom2to(n):
+    """ Input n>=6, Returns a array of primes, 2 <= p < n """
+    sieve = np.ones(n // 3 + (n % 6 == 2), dtype=bool)
+    for i in range(1, int(n ** 0.5) // 3 + 1):
+        if sieve[i]:
+            k = 3 * i + 1 | 1
+            sieve[k * k // 3 :: 2 * k] = False
+            sieve[k * (k - 2 * (i & 1) + 4) // 3 :: 2 * k] = False
+    return np.r_[2, 3, ((3 * np.nonzero(sieve)[0][1:] + 1) | 1)]
+
+
+possible_primes = primesfrom2to(1000000)
 prime_length = len(possible_primes)
 winners = []
 
@@ -31,7 +32,7 @@ for i in possible_primes:
     primers_right = []
     for j in range(len(string_prime)):
         shortened_left = string_prime[j:]
-        zero_checker = re.compile('[0].*')
+        zero_checker = re.compile("[0].*")
         if re.search(zero_checker, shortened_left):
             break
         integer_shortened = int(shortened_left)
@@ -49,10 +50,10 @@ for i in winners:
     primers_right = []
 
     for j in range(len(string_prime)):
-        shortened_left = string_prime[:-j-1]
+        shortened_left = string_prime[: -j - 1]
         if len(shortened_left) == 0:
             continue
-        zero_checker = re.compile('[0].*')
+        zero_checker = re.compile("[0].*")
         if re.search(zero_checker, shortened_left):
             break
         integer_shortened = int(shortened_left)
@@ -64,4 +65,4 @@ for i in winners:
 print(cleaner)
 print("The answer is {}.".format(sum(cleaner)))
 elapsed_time = time() - start_time
-print('The answer was found in {0:.4f} s.'.format(elapsed_time))
+print("The answer was found in {0:.4f} s.".format(elapsed_time))

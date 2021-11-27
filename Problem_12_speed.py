@@ -2,6 +2,7 @@ from time import time
 import numpy as np
 from math import sqrt
 from functools import reduce
+
 from numba import njit
 
 
@@ -12,8 +13,12 @@ def generate_tri_number(sequence_number):
 
 def factors(n):
     step = 2 if n % 2 else 1
-    return set(reduce(list.__add__,
-                      ([i, n // i] for i in range(1, int(sqrt(n)) + 1, step) if n % i == 0)))
+    return set(
+        reduce(
+            list.__add__,
+            ([i, n // i] for i in range(1, int(sqrt(n)) + 1, step) if n % i == 0),
+        )
+    )
 
 
 triangle_value = generate_tri_number(7)
@@ -26,5 +31,5 @@ while factor_number < 500:
     factor_number = len(triangle_factors)
     guess_value += 2
 elapsed_time = time() - start_time
-print(f'Total Time {elapsed_time}')
+print(f"Total Time {elapsed_time}")
 print(f"The answer is {triangle_value}.")
