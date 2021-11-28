@@ -3,6 +3,8 @@ from time import time
 from numba import njit
 from pprint import pprint
 import pandas as pd
+from math import sqrt
+from itertools import permutations, product
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Triangle, square, pentagonal, hexagonal, heptagonal, and octagonal numbers
@@ -33,65 +35,142 @@ What do we know?
 """
 
 start_time = time()
-# testing git
+
 
 def tri(values):
-    return values * (values + 1)/2
+    return values * (values + 1) / 2
+
+
+def is_tri(value):
+    n = sqrt((value * 2) + 0.25) - 0.5
+    if n == int(n):
+        return True
+    return False
 
 
 def square(values):
     return values ** 2
 
 
+def is_square(value):
+    n = sqrt(value)
+    if n == int(n):
+        return True
+    return False
+
+
 def penta(values):
-    return values * (3 * values - 1)/2
+    return values * (3 * values - 1) / 2
+
+
+def is_penta(value):
+    n = sqrt(2 * value / 3 + 1 / 36) + 1 / 6
+    if n == int(n):
+        return True
+    return False
 
 
 def hex(values):
     return values * (2 * values - 1)
 
 
+def is_hex(value):
+    n = sqrt(value / 2 + 0.0625) + 0.25
+    if n == int(n):
+        return True
+    return False
+
+
 def hepta(values):
-    return values * (5 * values - 3)/2
+    return values * (5 * values - 3) / 2
+
+
+def is_hepta(value):
+    n = sqrt(2 * value / 5 + 9 / 100) + 3 / 10
+    if n == int(n):
+        return True
+    return False
 
 
 def octo(values):
     return values * (3 * values - 2)
 
 
-figurate_range = np.arange(20, 140)
-figurate_db = pd.DataFrame()
-figurate_db['tri'] = tri(figurate_range)
-figurate_db['square'] = square(figurate_range)
-figurate_db['penta'] = penta(figurate_range)
-figurate_db['hex'] = hex(figurate_range)
-figurate_db['hepta'] = hepta(figurate_range)
-figurate_db['octo'] = octo(figurate_range)
-df = figurate_db.astype('int64')
-df = df.astype('str')
-possible_solutions = np.arange(1000, 1100)
-possible_solutions = possible_solutions.astype('str')
+def is_octo(value):
+    n = sqrt(value / 3 + 1 / 9) + 1 / 3
+    if n == int(n):
+        return True
+    return False
 
-new_endings = np.arange(11, 100).astype('str')
 
-# print(df)
-# for i in test.columns:
-#     print(i, test[i].sum())
+def recursive_term_finder(values, growing_list=[], counter=0):
+    counter += 1
+    for value in values:
+        growing_list.append(value)
+        values.remove(value)
+        last_two = value[2:]
+        next_term = list(filter(lambda x: x.startswith(last_two), values))
+        if counter < 8:
+            recursive_term_finder(values, growing_list=growing_list, counter=counter)
+        else:
+            growing_list = []
+            counter = 0
+            recursive_term_finder(values, growing_list=growing_list, counter=counter)
 
-for first_term in possible_solutions:
-    if first_term[-2] == '0':
-        continue
-    ending = first_term[-2:]
-    solution = [first_term]
-    for new_ending in new_endings:
-        second_term = ending + new_ending
-        if second_term in df.values:
-            solution.append(second_term)
-            for new_ending in new_endings:
-                third_term = second_term[-2:] + new_ending
-                if third_term in df.values:
-                    solution.append(third_term)
-                    print(solution)
+
+is_tri_vec = np.vectorize(is_tri)
+is_square_vec = np.vectorize(is_square)
+is_penta_vec = np.vectorize(is_penta)
+is_hex_vec = np.vectorize(is_hex)
+is_hepta_vec = np.vectorize(is_hepta)
+is_octo_vec = np.vectorize(is_octo)
+
+
+possibles = np.arange(1000, 10000).astype("str")
+remove_starting_zeroes = np.array(
+    list(filter(lambda x: x[2] != "0", possibles))
+).astype("int")
+
+tris = is_tri_vec(remove_starting_zeroes) * remove_starting_zeroes
+tris = tris[np.where(tris != 0)].astype("str")
+squares = is_square_vec(remove_starting_zeroes) * remove_starting_zeroes
+squares = squares[np.where(squares != 0)].astype("str")
+pentas = is_penta_vec(remove_starting_zeroes) * remove_starting_zeroes
+pentas = pentas[np.where(pentas != 0)].astype("str")
+hexes = is_hex_vec(remove_starting_zeroes) * remove_starting_zeroes
+hexes = hexes[np.where(hexes != 0)].astype("str")
+heptas = is_hepta_vec(remove_starting_zeroes) * remove_starting_zeroes
+heptas = heptas[np.where(heptas != 0)].astype("str")
+octos = is_octo_vec(remove_starting_zeroes) * remove_starting_zeroes
+octos = octos[np.where(octos != 0)].astype("str")
+collective = {
+    "squares": squares,
+    "pentas": pentas,
+    "hexes": hexes,
+    "heptas": heptas,
+    "octos": octos,
+}
+
+
+def recursive_looking(all_values, storage={}, value_to_check=None):
+    last_two = value_to_check[2:]
+    for key_name in all_values.keys():
+        for value_name in all_values[key_name]:
+            compare_first_two = value_name[:2]
+            print("last_two", last_two)
+            print("compare_first_two", compare_first_two)
+            if last_two != compare_first_two:
+                continue
+            storage[key_name] = value_name
+            all_values.pop(key_name)
+            recursive_looking(all_values, storage=storage, value_to_check=value_name)
+
+
+for tri in tris:
+    stored_answers = {"tris": tri}
+    recursive_looking(collective, storage=stored_answers, value_to_check=tri)
+
+recursive_looking(collective)
 
 elapsed_time = time() - start_time
-print('The answer was found in {0:.4f} s.'.format(elapsed_time))
+print("The answer was found in {0:.4f} s.".format(elapsed_time))

@@ -1,37 +1,35 @@
 """
-The cube, 41063625 (3453), can be permuted to produce two other cubes: 56623104 (3843) and 66430125 (4053).
-In fact, 41063625 is the smallest cube which has exactly three permutations of its digits which are also cube.
-Find the smallest cube for which exactly five permutations of its digits are cube.
+The cube, 41063625 (3453), can be permuted to produce two other cubes:
+56623104 (3843) and 66430125 (4053). In fact, 41063625 is the smallest cube
+which has exactly three permutations of its digits which are also cube.
+Find the smallest cube for which exactly
+five permutations of its digits are cube.
 """
 
 from time import time
-import numpy as np
-import pandas as pd
-from numba import njit, prange, vectorize
-from itertools import permutations
-from pprint import pprint
 
 
-def convert_to_integer(perms):
-    output = []
-    for i in perms:
-        output.append(np.int(''.join(i)))
-    return output
+def main():
+    # This was the 3 value so i might as well start here
+    value_to_check = 346
+    possibles = {}
+    while True:
+        # Calculates the cube of the number
+        cubed_values = value_to_check * value_to_check * value_to_check
+        cubed_value_to_str = tuple(sorted(str(cubed_values)))
+        if cubed_value_to_str in possibles.keys():
+            possibles[cubed_value_to_str].append(value_to_check)
+            if len(possibles[cubed_value_to_str]) == 5:
+                return min(possibles[cubed_value_to_str]) ** 3
+        else:
+            possibles[cubed_value_to_str] = [value_to_check]
+        value_to_check += 1
 
 
-def cube_root_cleaner(modified_perm):
-    keepers = []
-    for x in modified_perm:
-        if str(np.cbrt(x)).split('.')[1] == '0':
-            keepers.append(x)
-    return keepers
-
-
-possibles = list(permutations('41063625'))
-change_to_integer = [int(''.join(i)) for i in possibles]
-cube_root = map(lambda x: x if str(np.cbrt(x)).split('.')[1] == '0' else None, change_to_integer)
-cube_root_df = pd.Series(cube_root).dropna()
-pprint(pd.unique(cube_root_df))
-# cube_root = cube_root_array[np.logical_not(np.isnan(cube_root_array))]
-integers = convert_to_integer(possibles)
-print(cube_root_cleaner(integers))
+if __name__ == "__main__":
+    start_time = time()
+    answer = main()
+    print(answer)
+    print("The answer is: {}".format(answer))
+    elapsed_time = time() - start_time
+    print("The answer was found in {0:.4f} s.".format(elapsed_time))
