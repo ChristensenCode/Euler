@@ -6,6 +6,7 @@ from math import sqrt, floor, gcd
 from typing import List
 from time import time
 from tqdm import tqdm
+from numba import njit
 
 
 def shortest_repeated_sequence(input_list: List[int]) -> List[int]:
@@ -14,30 +15,29 @@ def shortest_repeated_sequence(input_list: List[int]) -> List[int]:
             return input_list[:i]
     return input_list[:]
 
-
+@njit
 def find_a_zero(number_to_check: int) -> int:
     return floor(sqrt(number_to_check))
 
-
+@njit
 def ignore_perfect_squares(value: int) -> bool:
     if floor(sqrt(value)) ** 2 == value:
         return True
     return False
 
-
 def determine_loop_count(N: float, numerator: int, denominator: int):
     fraction_value = abs(numerator) / denominator
     above_zero_check = N / denominator
-    loop_count = int(1)
+    loop_count = 1
     while True:
         check = above_zero_check - (loop_count - fraction_value)
         if check < 0:
-            loop_count = loop_count - 1
+            loop_count -= 1
             break
 
-        loop_count = loop_count + 1
+        loop_count += 1
     new_numerator = -round((loop_count - fraction_value) * denominator)
-    return int(loop_count), int(new_numerator)
+    return loop_count, int(new_numerator)
 
 
 def determine_pull_out_value(
