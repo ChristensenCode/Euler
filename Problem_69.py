@@ -20,21 +20,18 @@ Find the value of n ≤ 1,000,000 for which n/φ(n) is a maximum.
 https://en.wikipedia.org/wiki/Euler%27s_totient_function
 """
 
-from typing import List
-from numba import njit, vectorize
+from numba import njit
 from time import time
-from collections import Counter
-import numpy as np
 from tqdm import tqdm
 from sympy.ntheory import factorint
 
 
+@njit(fastmath=True)
 def mathy(base, factor):
     return base ** (factor - 1) * (base - 1)
 
 
 def main():
-
     n_over_phi = 0
     answer = 0
     for n in tqdm(range(2, 1000001)):
