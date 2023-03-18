@@ -62,8 +62,8 @@ def naive_solution():
             elif gcd(numerator, denominator) != 1:
                 continue
             differencer = abs(decimal_representation - LESS_THAN_LIMIT)
-            if differencer < winner_winner:
-                winner_winner = min_difference
+            if differencer < min_difference:
+                min_difference = differencer
                 fraction_rep = f"{numerator}/{denominator}"
 
     pprint(fraction_rep)
