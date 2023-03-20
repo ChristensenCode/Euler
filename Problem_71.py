@@ -8,70 +8,120 @@ from time import time
 from pprint import pprint
 from tqdm import tqdm
 import numpy as np
-from functools import partial
+from numba import njit
 
 
-def primary_actions(input_number):
-    sub_range = np.arange(1, input_number)
-    gcd_values = np.fromiter(map(partial(gcd, input_number), sub_range), dtype="int32")
-    locations_of_one = np.argwhere(gcd_values == 1)
-    reduced_proper_fractions = (sub_range[locations_of_one] / input_number).flatten()
-    reduced_numerators = sub_range[locations_of_one]
-    return reduced_numerators, reduced_proper_fractions
+def naive_solution(limit_number: int, target_value: float) -> int:
+    """
+    Nested loop for numerator and denominator that naively loops over
+    all the different combinations, which could mean 1,000,000,000 iterations.
 
+    This should technically should get you the answer, but it will take a long
+    time.
 
-def main():
-    LIMIT = 1_000_000
-    pretty_storage = {}
-    for d in tqdm(range(1, LIMIT + 1)):
-        red_num, red_prop = primary_actions(d)
-        for index, numerator in enumerate(red_num.flatten()):
-            pretty_storage[f"{numerator}/{d}"] = red_prop[index]
-
-    pretty_storage = sorted(pretty_storage.items(), key=lambda item: item[1])
-    pprint(pretty_storage)
-    x = 1
-
-
-def fast_inner_loop(
-    denominator_value: int, iteration_limit: int, value_to_compare: float = 3 / 7
-):
-    for numerator in range(1, iteration_limit):
-        decimal_representation = numerator / denominator_value
-        if decimal_representation > value_to_compare:
-            break
-    return f"{numerator}/{denominator_value}", decimal_representation
-
-
-def naive_solution():
-    # LIMIT = 1_000_000
-    LIMIT = 8
-    LIMIT += 1
-
-    LESS_THAN_LIMIT = 3 / 7
+    :param limit_number: range of values to check
+    :type limit_number: int
+    :param target_value: value looking to the left of
+    :type target_value: float
+    :return: numerator of value left of target.
+    :rtype: int
+    """
 
     min_difference = 1000
-    fraction_rep = ""
-    for denominator in tqdm(range(1, LIMIT)):
+    for denominator in tqdm(range(1, limit_number + 1)):
         # i could remove this inner loop potential with array operations.
-        for numerator in range(1, LIMIT):
+        for numerator in range(1, limit_number + 1):
             decimal_representation = numerator / denominator
 
-            if decimal_representation >= LESS_THAN_LIMIT:
-                break
-            elif gcd(numerator, denominator) != 1:
+            if gcd(numerator, denominator) != 1:
                 continue
-            differencer = abs(decimal_representation - LESS_THAN_LIMIT)
+            elif decimal_representation >= target_value:
+                break
+
+            differencer = abs(decimal_representation - target_value)
             if differencer < min_difference:
                 min_difference = differencer
-                fraction_rep = f"{numerator}/{denominator}"
 
-    pprint(fraction_rep)
+    return numerator
+
+
+@njit
+def farey_sequence_jitted(max_denominator: int, target_value: float = 3 / 7) -> int:
+    """
+    Same as the naive solution, but uses the farey sequence math principle
+    https://en.wikipedia.org/wiki/Farey_sequence (Farey neighbours) and
+    this function uses numba's njit decorator to speed it up.
+
+    :param max_denominator: maximum denominator value
+    :type max_denominator: int
+    :param target_value: value to look left of, defaults to 3/7
+    :type target_value: float, optional
+    :return: numerator of left-most value
+    :rtype: int
+    """
+    first_term = np.array([0, 1])
+    second_term = np.array([1, 1])
+    while True:
+        combined_term = first_term + second_term
+        fraction_combined_term = combined_term[0] / combined_term[1]
+        if combined_term[1] > max_denominator:
+            break
+
+        if fraction_combined_term >= target_value:
+            second_term = combined_term
+        elif fraction_combined_term < target_value:
+            first_term = combined_term
+
+    return first_term[0]
+
+
+def farey_sequence_normal(max_denominator: int, target_value: float = 3 / 7) -> int:
+    """
+    Same as the naive solution, but uses the farey sequence math principle
+    https://en.wikipedia.org/wiki/Farey_sequence (Farey neighbours) and
+    doesn't use njit to see how the two compare when you scale up this
+    calculation.
+
+    :param max_denominator: maximum denominator value
+    :type max_denominator: int
+    :param target_value: value to look left of, defaults to 3/7
+    :type target_value: float, optional
+    :return: numerator of left-most value
+    :rtype: int
+    """
+    first_term = np.array([0, 1])
+    second_term = np.array([1, 1])
+    while True:
+        combined_term = first_term + second_term
+        fraction_combined_term = combined_term[0] / combined_term[1]
+        if combined_term[1] > max_denominator:
+            break
+
+        if fraction_combined_term >= target_value:
+            second_term = combined_term
+        elif fraction_combined_term < target_value:
+            first_term = combined_term
+
+    return first_term[0]
 
 
 if __name__ == "__main__":
+    # start_time = time()
+    # print("The answer is: {}".format(farey_sequence_normal(100_000_000)))
+    # elapsed_time = time() - start_time
+    # print("The answer was found in {0:.4f} s.".format(elapsed_time))
+
+    compilation_start_time = time()
+    farey_sequence_jitted(8)
+    compilation_elapsed_time = time() - compilation_start_time
+    print("Compile Time: {0:.4f} s.".format(compilation_elapsed_time))
+
     start_time = time()
-    # print("The answer is: {}".format(main()))
-    print("The answer is: {}".format(naive_solution()))
+    print("The answer is: {}".format(farey_sequence_jitted(1_000_000)))
     elapsed_time = time() - start_time
     print("The answer was found in {0:.4f} s.".format(elapsed_time))
+
+    # start_time = time()
+    # print("The answer is: {}".format(farey_sequence_jitted(100_000_000)))
+    # elapsed_time = time() - start_time
+    # print("The answer was found in {0:.4f} s.".format(elapsed_time))
