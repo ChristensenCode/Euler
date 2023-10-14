@@ -11,6 +11,18 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Run Euler",
+            "program": "${workspaceFolder}/target/debug/rusty_euler",
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "sourceLanguages": [
+                "rust"
+            ],
+            "preLaunchTask": "build rust_euler"
         }
     ]
 }
