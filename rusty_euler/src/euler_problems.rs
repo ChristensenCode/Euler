@@ -247,7 +247,7 @@ pub fn problem_0008() {
 /// Project Euler Problem #9
 ///
 /// There exists exactly one Pythagorean triplet for which a+b+c=1000.
-/// Find the product a*b*c
+/// Find the product a*b*c (here)
 ///
 pub fn problem_0009() {
     let now = Instant::now();
