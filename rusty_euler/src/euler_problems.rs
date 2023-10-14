@@ -108,7 +108,7 @@ pub fn problem_0004() {
 ///
 pub fn problem_0005() {
     let now = Instant::now();
-    let mut final_answer: usize = 0;
+    let final_answer: usize;
 
     let mut step_size = 1;
     for i in 17..=20 {
@@ -150,12 +150,11 @@ pub fn problem_0005() {
 ///
 pub fn problem_0006() {
     let now = Instant::now();
-    let mut final_answer = 0;
 
     let first_hundred = 1..=100;
     let sum_of_squares: i32 = first_hundred.clone().map(|x: i32| x.pow(2)).sum();
     let square_of_sum: i32 = first_hundred.clone().into_iter().sum();
-    final_answer = square_of_sum.pow(2) - sum_of_squares;
+    let final_answer = square_of_sum.pow(2) - sum_of_squares;
 
     println!(
         "The answer is '{}' in {}ms!",
@@ -171,10 +170,9 @@ pub fn problem_0006() {
 ///
 pub fn problem_0007() {
     let now = Instant::now();
-    let mut final_answer = 0;
 
     let primes = sieve_of_eratosthenes(1_000_000);
-    final_answer = primes[10_000];
+    let final_answer = primes[10_000];
 
     println!(
         "The answer is '{}' in {}ms!",
@@ -235,6 +233,35 @@ pub fn problem_0008() {
 
         if combined_value > final_answer {
             final_answer = combined_value;
+        }
+    }
+
+    println!(
+        "The answer is '{}' in {}ms!",
+        final_answer,
+        now.elapsed().as_millis()
+    );
+}
+
+///
+/// Project Euler Problem #9
+///
+/// There exists exactly one Pythagorean triplet for which a+b+c=1000.
+/// Find the product a*b*c (here)
+///
+pub fn problem_0009() {
+    let now = Instant::now();
+    let mut final_answer = 0.0;
+
+    'outer: for a in 1..=1000 {
+        let a: f32 = a as f32;
+        for b in 1..=1000 {
+            let b: f32 = b as f32;
+            let c = (a.powf(2.0) + b.powf(2.0)).sqrt();
+            if c.fract() == 0.0 && a+b+c == 1000.0{
+                final_answer = a*b*c;
+                break 'outer;
+            }
         }
     }
 
