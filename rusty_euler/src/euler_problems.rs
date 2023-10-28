@@ -1,5 +1,5 @@
 mod utility;
-use std::time::Instant;
+use std::{fs, time::Instant};
 use utility::sieve_of_eratosthenes;
 
 ///
@@ -258,11 +258,140 @@ pub fn problem_0009() {
         for b in 1..=1000 {
             let b: f32 = b as f32;
             let c = (a.powf(2.0) + b.powf(2.0)).sqrt();
-            if c.fract() == 0.0 && a+b+c == 1000.0{
-                final_answer = a*b*c;
+            if c.fract() == 0.0 && a + b + c == 1000.0 {
+                final_answer = a * b * c;
                 break 'outer;
             }
         }
+    }
+
+    println!(
+        "The answer is '{}' in {}ms!",
+        final_answer,
+        now.elapsed().as_millis()
+    );
+}
+
+///
+/// Project Euler Problem #10
+///
+/// Find the sum of all primes below two million
+///
+pub fn problem_0010() {
+    let now = Instant::now();
+
+    let primes = sieve_of_eratosthenes(2_000_000);
+    let final_answer: usize = primes.iter().sum();
+
+    println!(
+        "The answer is '{}' in {}ms!",
+        final_answer,
+        now.elapsed().as_millis()
+    );
+}
+
+///
+/// Project Euler Problem #11
+///
+/// Calculate the largest product of four adjacent numbers.
+///
+pub fn problem_0011() {
+    let now = Instant::now();
+    let mut final_answer = 0;
+
+    let data_path = "/home/christrj/github/Euler/rusty_euler/src/data/problem_11.txt";
+    let contents = fs::read_to_string(data_path).expect("The data should be read in!");
+    let line_data = contents.lines();
+
+    let mut combined_line = vec![];
+
+    for line in line_data {
+        let values: Vec<&str> = line.split(' ').collect();
+        combined_line.extend(values);
+    }
+
+    let all_values: Vec<usize> = combined_line
+        .iter()
+        .map(|x| x.parse::<usize>().unwrap())
+        .collect();
+
+    let target_value = 0;
+
+    let mut row_length = 0;
+    let hor_line = vec![0, 1, 2, 3];
+    for _ in 0..20 {
+        for width in 0..=16 {
+            let hor_locations: Vec<usize> =
+                hor_line.iter().map(|&x| x + width + row_length).collect();
+            let indexed_values: Vec<_> = hor_locations.iter().map(|&i| all_values[i]).collect();
+            if indexed_values.contains(&target_value) {
+                continue;
+            }
+            let possible_value: i32 = indexed_values.iter().fold(1, |acc, &x| acc * x as i32);
+            if possible_value > final_answer {
+                final_answer = possible_value;
+            }
+        }
+        row_length += 20;
+    }
+
+    let mut row_length = 0;
+    let vert_line = vec![0, 20, 40, 60];
+    for _ in 0..16 {
+        for width in 0..=20 {
+            let vert_locations: Vec<usize> =
+                vert_line.iter().map(|&x| x + width + row_length).collect();
+            let indexed_values: Vec<_> = vert_locations.iter().map(|&i| all_values[i]).collect();
+            if indexed_values.contains(&target_value) {
+                continue;
+            }
+            let possible_value: i32 = indexed_values.iter().fold(1, |acc, &x| acc * x as i32);
+            if possible_value > final_answer {
+                final_answer = possible_value;
+            }
+        }
+        row_length += 20;
+    }
+
+    let mut row_length = 0;
+    let diag_down_line = vec![0, 21, 42, 63];
+    for _ in 0..=16 {
+        for width in 0..=16 {
+            let diag_down_locations: Vec<usize> = diag_down_line
+                .iter()
+                .map(|&x| x + width + row_length)
+                .collect();
+            let indexed_values: Vec<_> =
+                diag_down_locations.iter().map(|&i| all_values[i]).collect();
+            if indexed_values.contains(&target_value) {
+                continue;
+            }
+            let possible_value: i32 = indexed_values.iter().fold(1, |acc, &x| acc * x as i32);
+            if possible_value > final_answer {
+                final_answer = possible_value;
+            }
+        }
+        row_length += 20;
+    }
+
+    let mut row_length = 0;
+    let diag_up_line = vec![60, 41, 22, 3];
+    for _ in 0..=16 {
+        for width in 0..=16 {
+            let diag_up_locations: Vec<usize> = diag_up_line
+                .iter()
+                .map(|&x| x + width + row_length)
+                .collect();
+            let indexed_values: Vec<_> = diag_up_locations.iter().map(|&i| all_values[i]).collect();
+            if indexed_values.contains(&target_value) {
+                continue;
+            }
+            let possible_value: i32 = indexed_values.iter().fold(1, |acc, &x| acc * x as i32);
+            if possible_value > final_answer {
+                final_answer = possible_value;
+            }
+        }
+        row_length += 20;
     }
 
     println!(
