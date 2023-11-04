@@ -6,6 +6,7 @@ use crate::euler_problems::{
     problem_0009, problem_0010, problem_0011,
 };
 
+// main point to execute
 fn main() {
     println!("Starting Euler!");
     problem_0001();
