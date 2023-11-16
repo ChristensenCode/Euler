@@ -400,3 +400,51 @@ pub fn problem_0011() {
         now.elapsed().as_millis()
     );
 }
+
+
+///
+/// Project Euler Problem #12
+///
+/// 
+/// What is the value of the first triangle number
+/// to have over five hundred divisors?
+///
+pub fn problem_0012() {
+    let now = Instant::now();
+
+    let mut natural_number = 2;
+    let mut number_of_divisors = 0;
+    let mut triangle_number;
+    let mut divisors = 1;
+
+    loop {
+        triangle_number = (1..natural_number+1).sum();
+        while divisors * divisors <= triangle_number{
+            if triangle_number % divisors == 0 {
+                number_of_divisors += 1;
+                let floored = triangle_number / divisors;
+                if (floored as i32) != divisors {
+                    number_of_divisors += 1;
+                }
+            }
+            divisors += 1;
+        }
+
+        if number_of_divisors > 500 {
+            break;
+        }
+
+        natural_number += 1;
+        number_of_divisors = 0;
+        divisors = 1;
+
+    }
+
+    let final_answer = triangle_number;
+
+    println!(
+        "The answer is '{}' in {}ms!",
+        final_answer,
+        now.elapsed().as_millis()
+    );
+}
