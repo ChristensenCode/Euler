@@ -448,3 +448,33 @@ pub fn problem_0012() {
         now.elapsed().as_millis()
     );
 }
+
+///
+/// Project Euler Problem #13
+///
+/// Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
+///
+pub fn problem_0013() {
+    let now = Instant::now();
+
+    let data_path = "/home/christrj/github/Euler/rusty_euler/src/data/problem_13.txt";
+    let contents = fs::read_to_string(data_path)
+        .expect("The data should be read in!");
+    let line_data = contents.lines();
+
+    let mut intermediate_answer = 0.0;
+
+    for line in line_data {
+        let x: f64 = line.parse().unwrap();
+        intermediate_answer += x;
+    }
+
+    let almost_answer = intermediate_answer.to_string();
+    let final_answer = &almost_answer[..10];
+
+    println!(
+        "The answer is '{}' in {}ms!",
+        final_answer,
+        now.elapsed().as_millis()
+    );
+}
