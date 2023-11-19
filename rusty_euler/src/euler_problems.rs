@@ -478,3 +478,42 @@ pub fn problem_0013() {
         now.elapsed().as_millis()
     );
 }
+
+///
+/// Project Euler Problem #14
+///
+/// Which starting number, under one million, produces the longest chain?
+/// 
+pub fn problem_0014() {
+    let now = Instant::now();
+
+    let mut final_answer = 0;
+    let mut longest_chain = 0;  
+
+    for possible_answer in 113000..=1_000_000 {
+        let mut n: i64 = possible_answer;
+        let mut chain_length = 0;
+        while n != 1 {
+            if n % 2 == 0 {
+                n = n/2;
+            }
+            else {
+                n = 3 * n + 1
+            }
+            chain_length += 1;
+        }
+
+        if chain_length > longest_chain {
+            longest_chain = chain_length;
+            final_answer = possible_answer;
+        }
+
+    }
+
+    println!(
+        "The answer is '{}' in {}ms with a length of {}!",
+        final_answer,
+        now.elapsed().as_millis(),
+        longest_chain
+    );
+}
