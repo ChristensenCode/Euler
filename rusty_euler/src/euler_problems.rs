@@ -401,11 +401,10 @@ pub fn problem_0011() {
     );
 }
 
-
 ///
 /// Project Euler Problem #12
 ///
-/// 
+///
 /// What is the value of the first triangle number
 /// to have over five hundred divisors?
 ///
@@ -418,8 +417,8 @@ pub fn problem_0012() {
     let mut divisors = 1;
 
     loop {
-        triangle_number = (1..natural_number+1).sum();
-        while divisors * divisors <= triangle_number{
+        triangle_number = (1..natural_number + 1).sum();
+        while divisors * divisors <= triangle_number {
             if triangle_number % divisors == 0 {
                 number_of_divisors += 1;
                 let floored = triangle_number / divisors;
@@ -437,7 +436,6 @@ pub fn problem_0012() {
         natural_number += 1;
         number_of_divisors = 0;
         divisors = 1;
-
     }
 
     let final_answer = triangle_number;
@@ -458,8 +456,7 @@ pub fn problem_0013() {
     let now = Instant::now();
 
     let data_path = "/home/christrj/github/Euler/rusty_euler/src/data/problem_13.txt";
-    let contents = fs::read_to_string(data_path)
-        .expect("The data should be read in!");
+    let contents = fs::read_to_string(data_path).expect("The data should be read in!");
     let line_data = contents.lines();
 
     let mut intermediate_answer = 0.0;
@@ -483,21 +480,20 @@ pub fn problem_0013() {
 /// Project Euler Problem #14
 ///
 /// Which starting number, under one million, produces the longest chain?
-/// 
+///
 pub fn problem_0014() {
     let now = Instant::now();
 
     let mut final_answer = 0;
-    let mut longest_chain = 0;  
+    let mut longest_chain = 0;
 
     for possible_answer in 113000..=1_000_000 {
         let mut n: i64 = possible_answer;
         let mut chain_length = 0;
         while n != 1 {
             if n % 2 == 0 {
-                n = n/2;
-            }
-            else {
+                n = n / 2;
+            } else {
                 n = 3 * n + 1
             }
             chain_length += 1;
@@ -507,7 +503,6 @@ pub fn problem_0014() {
             longest_chain = chain_length;
             final_answer = possible_answer;
         }
-
     }
 
     println!(
@@ -515,5 +510,32 @@ pub fn problem_0014() {
         final_answer,
         now.elapsed().as_millis(),
         longest_chain
+    );
+}
+
+///
+/// Project Euler Problem #15
+///
+/// How many such routes are there through a 20x20 grid?    
+///
+pub fn problem_0015() {
+    let now = Instant::now();
+
+    pub fn factorial(input_number: i32) -> f64 {
+        let mut answer = input_number as f64;
+        for i in 1..input_number {
+            answer *= i as f64;
+        }
+        answer
+    }
+
+    let top = factorial(40);
+    let bottom = factorial(20) * factorial(20);
+    let final_answer = (top / bottom) as i64;
+
+    println!(
+        "The answer is '{}' in {}ms!",
+        final_answer,
+        now.elapsed().as_millis()
     );
 }

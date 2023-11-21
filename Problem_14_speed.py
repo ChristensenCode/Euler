@@ -13,11 +13,10 @@ def apply_calc(n):
 @vectorize
 def calculate_term_number_length(guess_value):
     term_list = 1
-    while True:
+    while guess_value != 1:
         guess_value = apply_calc(guess_value)
         term_list += 1
-        if guess_value == 1:
-            return term_list
+    return term_list
 
 
 start_time = time()
