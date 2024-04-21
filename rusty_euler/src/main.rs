@@ -19,6 +19,6 @@ fn main() {
     problem_0011();
     problem_0012();
     problem_0013();
-    // problem_0014();
+    problem_0014();
     problem_0015();
 }
