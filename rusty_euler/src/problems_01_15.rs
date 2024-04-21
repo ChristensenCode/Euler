@@ -1,6 +1,5 @@
-mod utility;
+use crate::utility::sieve_of_eratosthenes;
 use std::{fs, time::Instant};
-use utility::sieve_of_eratosthenes;
 
 ///
 /// Project Euler Problem #1
