@@ -1,10 +1,6 @@
-#[cfg(test)]
-mod tests {
-    // Note this useful idiom: importing names from outer (for mod tests) scope.
-    use super::*;
+use rusty_euler::problems::problems_01_15::problem_0001;
 
-    #[test]
-    fn test_problem_0001() {
-        assert_eq!(problem_0001(), 10);
-    }
+#[test]
+fn test_problem_0001() {
+    assert_eq!(233168, problem_0001());
 }

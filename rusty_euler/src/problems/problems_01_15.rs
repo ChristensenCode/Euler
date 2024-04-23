@@ -6,7 +6,7 @@ use std::{fs, time::Instant};
 ///
 /// Find the sum of all the multiples of 3 or 5 below 1000
 ///
-pub fn problem_0001() {
+pub fn problem_0001() -> u32 {
     let now = Instant::now();
     let mut final_answer: u32 = 0;
     for i in 1..1000 {
@@ -17,6 +17,7 @@ pub fn problem_0001() {
         }
     }
     output_statement("Problem 0001", final_answer.to_string(), now);
+    return final_answer;
 }
 
 ///
