@@ -26,7 +26,7 @@ pub fn problem_0001() -> u32 {
 /// By considering the terms in the Fibonacci sequence whose values do not exceed four million,
 /// find the sum of the even-valued terms.
 ///
-pub fn problem_0002() {
+pub fn problem_0002() -> u32 {
     let now = Instant::now();
     let mut final_answer: u32 = 0;
     let mut fib_holder = (1, 2);
@@ -38,6 +38,7 @@ pub fn problem_0002() {
         }
     }
     output_statement("Problem 0002", final_answer.to_string(), now);
+    return final_answer;
 }
 
 ///
@@ -45,7 +46,7 @@ pub fn problem_0002() {
 ///
 /// What is the largest prime factor of the number 600851475143?
 ///
-pub fn problem_0003() {
+pub fn problem_0003() -> usize {
     let now = Instant::now();
 
     // let final_answer: Vec<bool> = sieve_of_eratosthenes(100);
@@ -59,6 +60,7 @@ pub fn problem_0003() {
         }
     }
     output_statement("Problem 0003", final_answer.to_string(), now);
+    return final_answer;
 }
 
 ///
@@ -66,7 +68,7 @@ pub fn problem_0003() {
 ///
 /// Find the largest palindrome made from the product of two 3-digit numbers.
 ///
-pub fn problem_0004() {
+pub fn problem_0004() -> usize{
     let now = Instant::now();
     let mut final_answer: usize = 0;
 
@@ -81,6 +83,7 @@ pub fn problem_0004() {
         }
     }
     output_statement("Problem 0004", final_answer.to_string(), now);
+    return final_answer;
 }
 
 ///
@@ -88,7 +91,7 @@ pub fn problem_0004() {
 ///
 /// What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 ///
-pub fn problem_0005() {
+pub fn problem_0005() -> usize{
     let now = Instant::now();
     let final_answer: usize;
 
@@ -118,6 +121,7 @@ pub fn problem_0005() {
     }
 
     output_statement("Problem 0005", final_answer.to_string(), now);
+    return final_answer;
 }
 
 ///
@@ -126,7 +130,7 @@ pub fn problem_0005() {
 /// Find the difference between the sum of the squares of the first one hundred
 /// natural numbers and the square of the sum.
 ///
-pub fn problem_0006() {
+pub fn problem_0006() -> i32 {
     let now = Instant::now();
 
     let first_hundred = 1..=100;
@@ -135,6 +139,7 @@ pub fn problem_0006() {
     let final_answer = square_of_sum.pow(2) - sum_of_squares;
 
     output_statement("Problem 0006", final_answer.to_string(), now);
+    return final_answer;
 }
 
 ///
