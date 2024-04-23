@@ -1,3 +1,7 @@
+use std::time::Instant;
+
+/// Finds PRIME numbers.
+// #[allow(dead_code)]
 pub fn sieve_of_eratosthenes(n: usize) -> Vec<usize> {
     let mut prime: Vec<bool> = vec![true; n + 1];
     let mut found_primes: Vec<usize> = Vec::new();
@@ -21,4 +25,17 @@ pub fn sieve_of_eratosthenes(n: usize) -> Vec<usize> {
     }
 
     found_primes
+}
+
+pub fn output_statement(
+    problem_number: &str,
+    calculated_answer: String,
+    computation_time: Instant,
+) {
+    let elapsed_time = computation_time.elapsed().as_millis();
+
+    println!(
+        "{} - The answer is '{}' in {}ms!",
+        problem_number, calculated_answer, elapsed_time
+    );
 }

@@ -1,8 +1,4 @@
-mod problems_01_15;
-mod problems_16_30;
-mod utility;
-
-use crate::problems_01_15::*;
+use rusty_euler::problems::problems_01_15::*;
 
 // main point to execute
 fn main() {

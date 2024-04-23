@@ -1,4 +1,4 @@
-use crate::utility::sieve_of_eratosthenes;
+use crate::utility::utility::{output_statement, sieve_of_eratosthenes};
 use std::{fs, time::Instant};
 
 ///
@@ -16,11 +16,7 @@ pub fn problem_0001() {
             final_answer += i;
         }
     }
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 0001", final_answer.to_string(), now);
 }
 
 ///
@@ -40,11 +36,7 @@ pub fn problem_0002() {
             final_answer += fib_holder.1;
         }
     }
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 0002", final_answer.to_string(), now);
 }
 
 ///
@@ -65,12 +57,7 @@ pub fn problem_0003() {
             break;
         }
     }
-
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 0003", final_answer.to_string(), now);
 }
 
 ///
@@ -92,12 +79,7 @@ pub fn problem_0004() {
             }
         }
     }
-
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 0004", final_answer.to_string(), now);
 }
 
 ///
@@ -134,11 +116,7 @@ pub fn problem_0005() {
         counter += step_size;
     }
 
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 0005", final_answer.to_string(), now);
 }
 
 ///
@@ -155,11 +133,7 @@ pub fn problem_0006() {
     let square_of_sum: i32 = first_hundred.clone().into_iter().sum();
     let final_answer = square_of_sum.pow(2) - sum_of_squares;
 
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 0006", final_answer.to_string(), now);
 }
 
 ///
@@ -172,12 +146,7 @@ pub fn problem_0007() {
 
     let primes = sieve_of_eratosthenes(1_000_000);
     let final_answer = primes[10_000];
-
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 007", final_answer.to_string(), now);
 }
 
 ///
@@ -235,11 +204,7 @@ pub fn problem_0008() {
         }
     }
 
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 0080", final_answer.to_string(), now);
 }
 
 ///
@@ -263,12 +228,7 @@ pub fn problem_0009() {
             }
         }
     }
-
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 0090", final_answer.to_string(), now);
 }
 
 ///
@@ -281,12 +241,7 @@ pub fn problem_0010() {
 
     let primes = sieve_of_eratosthenes(2_000_000);
     let final_answer: usize = primes.iter().sum();
-
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 0010", final_answer.to_string(), now);
 }
 
 ///
@@ -393,11 +348,7 @@ pub fn problem_0011() {
         row_length += 20;
     }
 
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 0011", final_answer.to_string(), now);
 }
 
 ///
@@ -438,12 +389,7 @@ pub fn problem_0012() {
     }
 
     let final_answer = triangle_number;
-
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 0012", final_answer.to_string(), now);
 }
 
 ///
@@ -467,12 +413,7 @@ pub fn problem_0013() {
 
     let almost_answer = intermediate_answer.to_string();
     let final_answer = &almost_answer[..10];
-
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 0013", final_answer.to_string(), now);
 }
 
 ///
@@ -503,13 +444,7 @@ pub fn problem_0014() {
             final_answer = possible_answer;
         }
     }
-
-    println!(
-        "The answer is '{}' in {}ms with a length of {}!",
-        final_answer,
-        now.elapsed().as_millis(),
-        longest_chain
-    );
+    output_statement("Problem 0014", final_answer.to_string(), now);
 }
 
 ///
@@ -532,9 +467,5 @@ pub fn problem_0015() {
     let bottom = factorial(20) * factorial(20);
     let final_answer = (top / bottom) as i64;
 
-    println!(
-        "The answer is '{}' in {}ms!",
-        final_answer,
-        now.elapsed().as_millis()
-    );
+    output_statement("Problem 0015", final_answer.to_string(), now);
 }
