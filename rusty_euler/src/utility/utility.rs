@@ -27,9 +27,8 @@ pub fn sieve_of_eratosthenes(n: usize) -> Vec<usize> {
     found_primes
 }
 
-/// Brief.
-///
-/// Description.
+/// Prints a nice banner for showing the answer
+/// and how long it took to complete.
 ///
 /// * `problem_number` - Text about foo.
 /// * `calculated_answer` - Text about bar.
