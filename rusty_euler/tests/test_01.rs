@@ -12,3 +12,8 @@ fn test_problem_0002() {
 fn test_problem_0003() {
     assert_eq!(6857, problem_0003());
 }
+
+#[test]
+fn test_problem_0004() {
+    assert_eq!(906609, problem_0004())
+}
