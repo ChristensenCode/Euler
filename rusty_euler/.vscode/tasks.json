@@ -4,9 +4,14 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build rust_euler",
+            "label": "release rust",
             "type": "shell",
             "command": "cargo build --release",
+        },
+        {
+            "label": "debug rust",
+            "type": "shell",
+            "command": "cargo build",
         }
-    ]
+    ],
 }

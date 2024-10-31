@@ -68,7 +68,7 @@ pub fn problem_0003() -> usize {
 ///
 /// Find the largest palindrome made from the product of two 3-digit numbers.
 ///
-pub fn problem_0004() -> usize{
+pub fn problem_0004() -> usize {
     let now = Instant::now();
     let mut final_answer: usize = 0;
 
@@ -91,7 +91,7 @@ pub fn problem_0004() -> usize{
 ///
 /// What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 ///
-pub fn problem_0005() -> usize{
+pub fn problem_0005() -> usize {
     let now = Instant::now();
     let final_answer: usize;
 
@@ -152,7 +152,7 @@ pub fn problem_0007() {
 
     let primes = sieve_of_eratosthenes(1_000_000);
     let final_answer = primes[10_000];
-    output_statement("Problem 007", final_answer.to_string(), now);
+    output_statement("Problem 0007", final_answer.to_string(), now);
 }
 
 ///
@@ -210,7 +210,7 @@ pub fn problem_0008() {
         }
     }
 
-    output_statement("Problem 0080", final_answer.to_string(), now);
+    output_statement("Problem 0008", final_answer.to_string(), now);
 }
 
 ///
@@ -234,7 +234,7 @@ pub fn problem_0009() {
             }
         }
     }
-    output_statement("Problem 0090", final_answer.to_string(), now);
+    output_statement("Problem 0009", final_answer.to_string(), now);
 }
 
 ///

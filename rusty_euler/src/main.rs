@@ -1,4 +1,4 @@
-use rusty_euler::problems::problems_01_15::*;
+use rusty_euler::problems::{problems_01_15::*, problems_16_30::problem_0016};
 
 // main point to execute
 fn main() {
@@ -18,4 +18,5 @@ fn main() {
     problem_0013();
     problem_0014();
     problem_0015();
+    problem_0016();
 }

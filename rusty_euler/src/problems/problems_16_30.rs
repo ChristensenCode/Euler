@@ -1,7 +1,13 @@
+use std::time::Instant;
+
+use crate::utility::utility::output_statement;
+
 /// Project Euler Problem #16
 /// What is the sum of the digits of the number 2 ^ 1000?
 pub fn problem_0016() {
-    println!("thing")
+    let now = Instant::now();
+    let final_answer = 1;
+    output_statement("Problem 0016", final_answer.to_string(), now);
 }
 
 /// Project Euler Problem #17
