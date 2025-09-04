@@ -7,6 +7,11 @@
             "label": "build rust_euler",
             "type": "shell",
             "command": "cargo build",
+        },
+        {
+            "label": "build release",
+            "type": "shell",
+            "command": "cargo build --release",
         }
     ]
 }

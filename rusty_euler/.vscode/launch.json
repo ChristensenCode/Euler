@@ -7,7 +7,7 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Run Euler",
+            "name": "Run Debug Euler",
             "program": "${workspaceFolder}/target/debug/rusty_euler",
             "args": [],
             "cwd": "${workspaceRoot}",
@@ -15,6 +15,18 @@
                 "rust"
             ],
             "preLaunchTask": "build rust_euler"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Run Release",
+            "program": "${workspaceFolder}/target/debug/rusty_euler",
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "sourceLanguages": [
+                "rust"
+            ],
+            "preLaunchTask": "build release"
         }
     ]
 }
