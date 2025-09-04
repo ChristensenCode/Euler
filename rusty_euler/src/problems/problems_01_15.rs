@@ -68,7 +68,7 @@ pub fn problem_0003() -> usize {
 ///
 /// Find the largest palindrome made from the product of two 3-digit numbers.
 ///
-pub fn problem_0004() -> usize{
+pub fn problem_0004() -> usize {
     let now = Instant::now();
     let mut final_answer: usize = 0;
 
@@ -91,7 +91,7 @@ pub fn problem_0004() -> usize{
 ///
 /// What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 ///
-pub fn problem_0005() -> usize{
+pub fn problem_0005() -> usize {
     let now = Instant::now();
     let final_answer: usize;
 
